@@ -17,7 +17,7 @@ import javax.swing.SwingConstants;
 import Controlador.coordinador;
 
 public class VentanaGestionarPersonas {
-	Coordinador miCoordinador;
+	coordinador miCoordinador;
     JPanel miPanel; 
     JLabel lblTitulo;
     JLabel lblDocumento;
@@ -144,7 +144,7 @@ public class VentanaGestionarPersonas {
     }
     
     public void mostrar (String codigo) {
-        PersonaVo persona = this.miCoordinador.consultarPersona(codigo);
+        PersonaVO persona = this.miCoordinador.consultarPersona(codigo);
         if (persona == null) {
             listaTxt.setText("La persona no está registrada.");
         } else {

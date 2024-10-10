@@ -28,7 +28,7 @@ public class ProcesosPersona {
 }
 
 	public void actualizar(String documento, String nombre, String telefono) {
-		if (consultar(documento) != null) {
+		if (consultar1(documento) != null) {
             if (documento.length() < 1){
                 JOptionPane.showMessageDialog(null, "Se debe ingresar el documento de la persona", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
@@ -41,31 +41,37 @@ public class ProcesosPersona {
                 JOptionPane.showMessageDialog(null, "Se debe ingresar el telefono de la persona", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
+            
             PersonaDao personaDao = new PersonaDao();
             personaDao.actualizar(documento, nombre, telefono);
         } else {
             JOptionPane.showMessageDialog(null, "La persona no está registrada", "Error", JOptionPane.ERROR_MESSAGE);
         }
+	}
+
+		private Object consultar1(String documento) {
+			 if ( documento.length() < 1) {
+		            JOptionPane.showMessageDialog(null, "Se debe ingresar el documento de la persona", "Error", JOptionPane.ERROR_MESSAGE);
+		            return null;
+		        }
+		return null;
+	}
+
 		public ArrayList<PersonaVO> listarPersonas() {
 	        PersonaDao personaDao = new PersonaDao();
 	        return personaDao.listar();
-	}
-
-	public boolean eliminarPersona(String documento) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	public PersonaVO consultar(String documento,boolean mensaje) {
-		if(mensaje && documento.length()<1) {
-			JOptionPane.showMessageDialog(null, "dee ingresar el documento", "Error", JOptionPane.ERROR_MESSAGE);
+		}
+	public PersonaVO consultar(String documento) {
+		if( documento.length()<1) {
+			JOptionPane.showMessageDialog(null, "debe ingresar el documento", "Error", JOptionPane.ERROR_MESSAGE);
 			return null;
 		}
 		PersonaDao personaDao = new PersonaDao();
-        return personaDao.consultar(documento);}
-		
+        return personaDao.consultar(documento);
+  
 	}
-	public boolean eliminarPersona(String documento) {
+	
+	public boolean eliminarPersona1(String documento) {
         if (documento.length() < 1) {
             return false;
         }

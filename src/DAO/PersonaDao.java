@@ -1,6 +1,7 @@
 package DAO;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -70,8 +71,58 @@ public boolean eliminar (String documento) {
     }
 }
 public ArrayList<PersonaVO> listar() {
-	// TODO Auto-generated method stub
-	return null;
-}
+	ArrayList<PersonaVO> lista = new ArrayList<PersonaVO>();
+    Conexion miConexion = new Conexion();
+    try {
+        Statement consulta = miConexion.getConnection().createStatement();
+        PreparedStatement consultar = miConexion.getConnection().prepareStatement("SELECT * FROM personas");
+        ResultSet res = consultar.executeQuery();
+        boolean hay = false;
+        while(res.next()){
+            hay = true;
+            PersonaVO persona = new PersonaVO();
+            persona.setDocumento(res.getString("documento"));
+            persona.setNombre(res.getString("nombre"));
+            persona.setTelefono(res.getString("telefono"));
+            lista.add(persona);
+        }
+        consulta.close();
+        miConexion.desconectar();
+        if (hay)
+            return lista;
+        else 
+            return null;
+    } catch (SQLException e) {
+        System.out.println(e.getMessage());
+        miConexion.desconectar();
+        return null;
 
+   }
+}
+public Object actualizar(String documento, String nombre, String telefono) {
+	PersonaVO personaConsultada = new PersonaVO();
+    Conexion miConexion = new Conexion();
+    try {
+        Statement consulta = miConexion.getConnection().createStatement();
+        PreparedStatement consultar = miConexion.getConnection().prepareStatement("SELECT * FROM personas WHERE documento=\""+documento+"\"");
+        ResultSet res = consultar.executeQuery();
+        boolean existe = false;
+        while(res.next()) {
+            existe = true;
+            personaConsultada.setDocumento(res.getString("documento"));
+            personaConsultada.setNombre(res.getString("nombre"));
+            personaConsultada.setTelefono(res.getString("telefono"));
+        }
+        consulta.close();
+        miConexion.desconectar();
+        if (existe)
+            return personaConsultada;
+        else
+            return null;
+    } catch (SQLException e) {
+        System.out.println(e.getMessage());
+        miConexion.desconectar();
+        return null;
+    }
+}
 }
